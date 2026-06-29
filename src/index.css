@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta inspirada en la foto del lago (Patagonia) */
+  --color-sand-50: #faf6ef;
+  --color-sand-100: #f4ecdd;
+  --color-sand-200: #e9dcc4;
+  --color-sand-300: #d9c6a6;
+  --color-sand-400: #c4ac85;
+
+  --color-lake-300: #7fa8be;
+  --color-lake-400: #4d86a4;
+  --color-lake-500: #2c5f7c;
+  --color-lake-600: #234d66;
+  --color-lake-700: #1a3a4d;
+
+  --color-sunset-400: #e0936c;
+  --color-sunset-500: #c97b5a;
+  --color-sunset-600: #a85f42;
+
+  --color-pine-400: #7a9b7e;
+  --color-pine-500: #5b8c6e;
+  --color-pine-600: #46735a;
+
+  --color-ink: #2a2722;
+  --color-ink-soft: #6b6359;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px rgb(42 39 34 / 0.04), 0 8px 24px -8px rgb(42 39 34 / 0.12);
+  --shadow-lift: 0 4px 8px rgb(42 39 34 / 0.06), 0 24px 48px -16px rgb(42 39 34 / 0.22);
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-sand-50);
+    background-image:
+      radial-gradient(60rem 60rem at 110% -10%, rgb(127 168 190 / 0.18), transparent 60%),
+      radial-gradient(50rem 50rem at -10% 110%, rgb(201 123 90 / 0.14), transparent 55%);
+    background-attachment: fixed;
+    min-height: 100svh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+}
+
+/* Utilidades propias */
+.glass {
+  background: rgb(255 255 255 / 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.6);
+}
+
+.card {
+  background: rgb(255 255 255 / 0.92);
+  border: 1px solid var(--color-sand-200);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: float-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes pop {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+/* Scrollbar suave */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand-300);
+  border-radius: 999px;
+  border: 2px solid var(--color-sand-50);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-sand-400); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
