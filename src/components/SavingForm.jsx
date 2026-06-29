@@ -88,27 +88,26 @@ export default function SavingForm({ goals = [], onSubmit, onCancel }) {
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="mb-1.5 block text-sm font-semibold text-ink-soft">{isRetiro ? 'Lo sacó' : 'Aportó'}</label>
-          <div className="grid grid-cols-2 gap-1 rounded-2xl bg-sand-100 p-1">
-            {PEOPLE.map((p) => (
-              <button
-                type="button"
-                key={p}
-                onClick={() => setWho(p)}
-                className={`rounded-xl px-2 py-2 text-sm font-semibold transition
-                  ${who === p ? 'bg-white text-pine-600 shadow-soft' : 'text-ink-soft'}`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
+      <div>
+        <label className="mb-1.5 block text-sm font-semibold text-ink-soft">{isRetiro ? 'Lo sacó' : 'Aportó'}</label>
+        <div className="grid grid-cols-3 gap-1 rounded-2xl bg-sand-100 p-1">
+          {[...PEOPLE, 'Ambos'].map((p) => (
+            <button
+              type="button"
+              key={p}
+              onClick={() => setWho(p)}
+              className={`rounded-xl px-2 py-2 text-sm font-semibold transition
+                ${who === p ? 'bg-white text-pine-600 shadow-soft' : 'text-ink-soft'}`}
+            >
+              {p}
+            </button>
+          ))}
         </div>
-        <div>
-          <label className="mb-1.5 block text-sm font-semibold text-ink-soft">Fecha</label>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
-        </div>
+      </div>
+
+      <div>
+        <label className="mb-1.5 block text-sm font-semibold text-ink-soft">Fecha</label>
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputCls} />
       </div>
 
       <div className="flex gap-3 pt-1">
