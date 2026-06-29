@@ -40,10 +40,10 @@ export default function App() {
 
   // ───── Cálculos ─────
   const m = useMemo(() => {
-    const now = monthKey(new Date().toISOString())
+    const now = monthKey(new Date())
     const prev = (() => {
       const d = new Date(); d.setMonth(d.getMonth() - 1)
-      return monthKey(d.toISOString())
+      return monthKey(d)
     })()
 
     const monthExp = data.expenses.filter((e) => monthKey(e.date) === now)
@@ -77,7 +77,7 @@ export default function App() {
     const months = []
     for (let i = 5; i >= 0; i--) {
       const d = new Date(); d.setMonth(d.getMonth() - i)
-      months.push(monthKey(d.toISOString()))
+      months.push(monthKey(d))
     }
     const barData = months.map((k) => ({
       month: monthLabel(k),
