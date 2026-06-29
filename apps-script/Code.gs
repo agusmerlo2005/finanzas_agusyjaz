@@ -9,7 +9,7 @@
 
 const SHEETS = {
   expenses: { name: 'Gastos',  headers: ['id', 'date', 'description', 'category', 'amount', 'who'] },
-  savings:  { name: 'Ahorros', headers: ['id', 'date', 'description', 'amount', 'who', 'goal'] },
+  savings:  { name: 'Ahorros', headers: ['id', 'date', 'description', 'amount', 'who', 'goal', 'type'] },
   goals:    { name: 'Metas',   headers: ['id', 'name', 'target'] },
 }
 

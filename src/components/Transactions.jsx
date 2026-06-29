@@ -46,24 +46,29 @@ export default function Transactions({ expenses, savings, onDelete }) {
           {items.map((it) => {
             const isExp = it.kind === 'expense'
             const cat = isExp ? categoryById(it.category) : null
+            // Un ahorro con monto negativo (o type 'retiro') es plata que sacaron.
+            const isRetiro = !isExp && (Number(it.amount) < 0 || it.type === 'retiro')
+            const negative = isExp || isRetiro
             return (
               <li key={it.kind + it.id} className="group flex items-center gap-3 rounded-xl px-2 py-3 transition hover:bg-sand-50">
                 <div
                   className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-lg"
-                  style={{ background: isExp ? `${cat.color}22` : '#5b8c6e22' }}
+                  style={{ background: isExp ? `${cat.color}22` : isRetiro ? '#c97b5a22' : '#5b8c6e22' }}
                 >
-                  {isExp ? cat.emoji : '🌱'}
+                  {isExp ? cat.emoji : isRetiro ? '↩️' : '🌱'}
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-semibold">
-                    {it.description || (isExp ? cat.label : 'Ahorro')}
+                    {it.description || (isExp ? cat.label : isRetiro ? 'Retiro' : 'Ahorro')}
                   </p>
                   <p className="truncate text-sm text-ink-soft">
-                    {isExp ? cat.label : it.goal ? `Meta: ${it.goal}` : 'Ahorro general'} · {it.who} · {fmtDate(it.date)}
+                    {isExp
+                      ? cat.label
+                      : (isRetiro ? 'Retiro' : 'Ahorro') + (it.goal ? ` · ${it.goal}` : ' general')} · {it.who} · {fmtDate(it.date)}
                   </p>
                 </div>
-                <span className={`shrink-0 font-bold ${isExp ? 'text-sunset-600' : 'text-pine-600'}`}>
-                  {isExp ? '−' : '+'}{money(it.amount)}
+                <span className={`shrink-0 font-bold ${negative ? 'text-sunset-600' : 'text-pine-600'}`}>
+                  {negative ? '−' : '+'}{money(Math.abs(Number(it.amount) || 0))}
                 </span>
                 <button
                   onClick={() => onDelete(it.kind, it.id)}

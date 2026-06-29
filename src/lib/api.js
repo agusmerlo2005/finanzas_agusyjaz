@@ -96,13 +96,18 @@ export async function addExpense(e) {
 }
 
 export async function addSaving(s) {
+  const type = s.type === 'retiro' ? 'retiro' : 'aporte'
+  // Un retiro se guarda como monto NEGATIVO: así todas las sumas
+  // (ahorro acumulado, del mes, progreso de metas) lo restan solas.
+  const magnitude = Math.abs(Number(s.amount) || 0)
   const row = {
     id: uid(),
     date: s.date || todayISO(),
-    description: s.description?.trim() || 'Ahorro',
-    amount: Number(s.amount) || 0,
+    description: s.description?.trim() || (type === 'retiro' ? 'Retiro' : 'Ahorro'),
+    amount: type === 'retiro' ? -magnitude : magnitude,
     who: s.who,
     goal: s.goal || '',
+    type,
   }
   if (!isConnected()) {
     const d = readDemo(); d.savings.unshift(row); writeDemo(d); return row
